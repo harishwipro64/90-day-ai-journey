@@ -1,0 +1,40 @@
+name: Day 1 - Test Cloud
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check repository
+        run: |
+          echo "Cloud runner is working!"
+          echo ""
+          echo "Today's note:"
+          echo "===================="
+          cat daily_notes/day-001.md
+          echo "===================="
+
+      - name: Check FFmpeg
+        run: |
+          ffmpeg -version | head -1
+
+      - name: Check Python
+        run: |
+          python3 --version
+
+      - name: Create test output
+        run: |
+          mkdir -p output
+          echo "Day 1 cloud pipeline test successful." > output/test.txt
+
+      - name: Upload test result
+        uses: actions/upload-artifact@v4
+        with:
+          name: day-001-test
+          path: output/test.txt
